@@ -3,9 +3,9 @@ class ItemsController < ApplicationController
     render json: Item.all
   end
 
-  private
 
+  private
   def item_params
-    params.require(:item).permit(:name, :description, :quantity, :catagory, :price)
+    params.require(:item).permit(:name, :description, :quantity, :category, :price)
   end
 end
