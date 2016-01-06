@@ -1,4 +1,29 @@
 var Item = React.createClass({
+  getInitialState: function(){
+    return{ edit: false};
+  },
+
+  deleteItem: function(){
+    var self = this;
+    $.ajax({
+      url: '/items/' + this.props.id,
+      type: 'DELETE',
+      success: function(){
+        self.props.refreshList();
+      }
+    });
+  },
+
+  refreshStore: function(){
+    var self = this;
+    $.ajax({
+      url: '/items',
+      type: 'GET',
+      success: function(data){
+        self.setState({items: data });
+      }
+    });
+  },
 
   render: function() {
     var id = 'item-' + this.props.id;
@@ -6,11 +31,13 @@ var Item = React.createClass({
       <li>
         <div className='row'>
           <div className='col s10'>
-            {this.props.name}
-            {this.props.description}
-            {this.props.quantity}
-            {this.props.category}
-            {this.props.price}
+            <p>Name: {this.props.name}</p>
+            <p>Description: {this.props.description}</p>
+            <p>Quantity: {this.props.quantity}</p>
+            <p>Category: {this.props.category}</p>
+            <p>Price: {this.props.price}</p>
+            <button className="btn green">BUY</button>
+            <!--<button className="btn red" onClick={this.deleteItem()}>Delete Bait</button>-->
           </div>
         <div className='col s2'>
           <a onClick={this.toggleEdit}>Cancel</a>
