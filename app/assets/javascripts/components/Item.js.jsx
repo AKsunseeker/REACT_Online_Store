@@ -1,4 +1,5 @@
 var Item = React.createClass({
+
   getInitialState: function(){
     return{ edit: false};
   },
@@ -9,21 +10,11 @@ var Item = React.createClass({
       url: '/items/' + this.props.id,
       type: 'DELETE',
       success: function(){
-        self.props.refreshList();
+        self.props.refreshStore();
       }
     });
   },
 
-  refreshStore: function(){
-    var self = this;
-    $.ajax({
-      url: '/items',
-      type: 'GET',
-      success: function(data){
-        self.setState({items: data });
-      }
-    });
-  },
 
   render: function() {
     var id = 'item-' + this.props.id;
@@ -37,7 +28,7 @@ var Item = React.createClass({
             <p>Category: {this.props.category}</p>
             <p>Price: {this.props.price}</p>
             <button className="btn green">BUY</button>
-            <!--<button className="btn red" onClick={this.deleteItem()}>Delete Bait</button>-->
+            <button className="btn red" onClick={this.deleteItem}>Delete Bait</button>
           </div>
         <div className='col s2'>
           <a onClick={this.toggleEdit}>Cancel</a>

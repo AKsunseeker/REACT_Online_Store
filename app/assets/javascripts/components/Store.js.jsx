@@ -1,4 +1,5 @@
 var Store = React.createClass({
+
   getInitialState: function() {
     return { items: []};
   },
@@ -17,18 +18,23 @@ var Store = React.createClass({
   showAddForm: function(){
     this.setState({showAdd: !this.state.showAdd});
   },
+
   addItemName: function(e){
     this.setState({itemName: e.currentTarget.value});
   },
+
   addItemDescription: function(e){
     this.setState({itemDescription: e.currentTarget.value});
   },
+
   addItemQuantity: function(e){
     this.setState({itemQuantity: e.currentTarget.value});
   },
+
   addItemCategory: function(e){
     this.setState({itemCategory: e.currentTarget.value});
   },
+
   addItemPrice: function(e){
     this.setState({itemPrice: e.currentTarget.value});
   },
@@ -58,7 +64,7 @@ var Store = React.createClass({
     $.ajax({
       url: '/items',
       type: 'POST',
-      data: {item:{name: this.state.itemName, description: this.state.itemDescription, quantity: this.state.itemQuantity, category: this.state.itemCategory, price: this.state.itemPrice}},
+      data: {item: {name: this.state.itemName, description: this.state.itemDescription, quantity: this.state.itemQuantity, category: this.state.itemCategory, price: this.state.itemPrice}},
       success: function(data){
         var items = self.state.items;
         items.push(data);
@@ -75,14 +81,14 @@ var Store = React.createClass({
     for (var i = 0; i < this.state.items.length; i++) {
       var item = this.state.items[i];
       var key = "Item-" + item.id;
-      items.push(<Item id={item.id} name={item.name} description={item.description} key={key} category={item.category} price={item.price} />)
+      items.push(<Item key={key} refreshStore={this.refreshStore} id={item.id} name={item.name} description={item.description} category={item.category} price={item.price} />)
     }
     return items;
   },
 
 
 
-  refreshList: function(){
+  refreshStore: function(){
     var self = this;
     $.ajax({
       url: '/items',
